@@ -6,6 +6,7 @@ use App\Models\Car;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Booking;
+use Illuminate\Contracts\View\View;
 
 class BookingController extends Controller
 {
@@ -86,6 +87,21 @@ class BookingController extends Controller
 
         return back()->with('success', 'Cancellation requested successfully. Your request is pending admin approval.');
     }
+
+    public function history(): \Illuminate\Contracts\View\View
+    {
+        $user = Auth::user();
+        $bookings = Booking::where('customer_id', $user->id)
+            ->orderBy('start_date', 'desc')
+            ->with('cars.branch') // Eager load the 'cars' relationship and its 'branch'
+            ->get();
+
+        return view('bookings.history', compact('bookings'));
+    }
+
+
+
+
     public function adminPendingBookings()
     {
         $pendingBookings = Booking::where('booking_status', 'pending')

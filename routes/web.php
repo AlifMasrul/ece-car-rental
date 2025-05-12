@@ -29,11 +29,19 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/bookings/{booking}/request-cancellation', [BookingController::class, 'requestCancellation'])->name('bookings.request-cancellation');
     Route::get('/profile/pending-cancellations', [ProfileController::class, 'pendingCancellations'])->name('profile.pending-cancellations');
     Route::get('/profile/history', [ProfileController::class, 'history'])->name('profile.history');
+    Route::get('/bookings/history', [App\Http\Controllers\BookingController::class, 'history'])->name('bookings.history');
+    Route::get('/cancellations/status', [App\Http\Controllers\CancellationController::class, 'status'])->name('cancellations.status');
 });
 
 Route::middleware(['auth', IsAdmin::class])->prefix('admin')->group(function () {
     Route::get('/dashboard', function () {
-        return view('admin.dashboard');
+        $totalUsers = \App\Models\User::count();
+        $activeCars = \App\Models\Car::count(); // Assuming all cars are 'active'
+        $pendingBookings = \App\Models\Booking::where('booking_status', 'pending')->count();
+        $recentBookings = \App\Models\Booking::orderBy('created_at', 'desc')->take(5)->get();
+        $pendingCancellations = \App\Models\Booking::where('cancellation_status', 'pending')->count();
+
+        return view('admin.dashboard', compact('totalUsers', 'activeCars', 'pendingBookings', 'recentBookings', 'pendingCancellations'));
     })->name('admin.dashboard');
 
     // Admin car management routes
@@ -51,4 +59,7 @@ Route::middleware(['auth', IsAdmin::class])->prefix('admin')->group(function () 
     Route::get('/cancellations/pending', [BookingController::class, 'adminPendingCancellations'])->name('admin.cancellations.pending');
     Route::patch('/cancellations/{booking}/approve', [BookingController::class, 'adminApproveCancellation'])->name('admin.cancellations.approve');
     Route::patch('/cancellations/{booking}/reject', [BookingController::class, 'adminRejectCancellation'])->name('admin.cancellations.reject');
+    Route::get('/admin/users', [App\Http\Controllers\Admin\UserController::class, 'index'])->name('admin.users.index');
+    Route::post('/admin/users/{user}/block', [App\Http\Controllers\Admin\UserController::class, 'block'])->name('admin.users.block');
+    Route::post('/admin/users/{user}/unblock', [App\Http\Controllers\Admin\UserController::class, 'unblock'])->name('admin.users.unblock');
 });

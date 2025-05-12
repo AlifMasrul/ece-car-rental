@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Car;
 
 class HomeController extends Controller
 {
@@ -21,8 +22,9 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+      public function index()
     {
-        return view('home');
+        $totalAvailableCars = Car::count(); // Get the total count of cars
+        return view('home', compact('totalAvailableCars'));
     }
 }

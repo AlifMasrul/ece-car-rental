@@ -1,13 +1,8 @@
-@extends('layouts.app')
+@extends('layouts.user')
 
 @section('content')
 <div class="container">
-    @auth
-    <div class="mb-3">
-        <a href="{{ route('profile.history') }}" class="btn btn-outline-info">My Booking History</a>
-        <a href="{{ route('profile.pending-cancellations') }}" class="btn btn-outline-warning ms-2">Cancellation Pending</a>
-    </div>
-    @endauth
+   
 
     <h1>Car List</h1>
 
