@@ -4,63 +4,80 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <title>Easy Car Enterprise</title>
 
+    <!-- Google Font & Bootstrap -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-Y9PmytcbvPpNxx6ts3EyJDvAnvK/zqzjny9c0B+jFOlyu4oVD5PtogQ9v+nuAAXX" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
         body {
             font-family: 'Nunito', sans-serif;
+            background-color: #f4f6f9;
+        }
+
+        .navbar {
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
         }
 
         .hero-section {
-            background-color: #f8f9fa;
-            padding: 5rem 0;
+            background: linear-gradient(135deg, #e3f2fd, #ffffff);
+            padding: 6rem 0;
             text-align: center;
+            border-bottom: 1px solid #dee2e6;
         }
 
-        .btn-primary {
-            background-color: #007bff;
-            border-color: #007bff;
+        .hero-section h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
         }
 
-        .btn-primary:hover {
-            background-color: #0056b3;
-            border-color: #0056b3;
+        .hero-section p {
+            font-size: 1.25rem;
+            color: #555;
         }
 
-        .btn-success {
-            background-color: #28a745;
-            border-color: #28a745;
+        .card {
+            border: none;
+            border-radius: 1rem;
+            box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
         }
 
-        .btn-success:hover {
-            background-color: #1e7e34;
-            border-color: #1e7e34;
+        .btn-lg {
+            padding: 0.75rem 1.5rem;
+            font-size: 1.125rem;
+        }
+
+        footer {
+            background-color: #ffffff;
+            padding: 2rem 0;
+            text-align: center;
+            color: #888;
+            font-size: 0.9rem;
+            margin-top: 4rem;
+            border-top: 1px solid #dee2e6;
         }
     </style>
 </head>
 
-<body class="antialiased">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="/">Easy Car Enterprise</a>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white">
+        <div class="container-lg">
+            <a class="navbar-brand fw-bold text-primary" href="/">Easy Car Enterprise</a>
             <div class="d-flex">
                 @if (Route::has('login'))
                     <div>
                         @auth
-                            <a href="{{ route('cars.index') }}" class="btn btn-secondary me-2">Browse Cars</a>
-                            <form method="POST" action="{{ route('logout') }}">
+                            <a href="{{ route('cars.index') }}" class="btn btn-outline-primary me-2">Browse Cars</a>
+                            <form method="POST" action="{{ route('logout') }}" class="d-inline">
                                 @csrf
                                 <button type="submit" class="btn btn-danger">Logout</button>
                             </form>
                         @else
                             <a href="{{ route('login') }}" class="btn btn-primary me-2">Log in</a>
-
                             @if (Route::has('register'))
                                 <a href="{{ route('register') }}" class="btn btn-success">Register</a>
                             @endif
@@ -71,42 +88,52 @@
         </div>
     </nav>
 
+    <!-- Hero Section -->
     <div class="hero-section">
         <div class="container">
-            <h1 class="display-4">Welcome to Easy Car Enterprise</h1>
-            <p class="lead">Your trusted source for convenient and affordable car rentals.</p>
-            <hr class="my-4">
+            <h1>Welcome to Easy Car Enterprise</h1>
+            <p>Your trusted source for convenient and affordable car rentals.</p>
+            <hr class="my-4 w-25 mx-auto">
             @auth
                 <p>Ready to find your perfect ride?</p>
-                <a class="btn btn-lg btn-primary" href="{{ route('cars.index') }}" role="button">Browse Available Cars</a>
+                <a class="btn btn-lg btn-primary" href="{{ route('cars.index') }}">Browse Available Cars</a>
             @else
                 <p>Please log in or register to browse our available cars.</p>
-                <a class="btn btn-lg btn-primary me-2" href="{{ route('login') }}" role="button">Log In</a>
+                <a class="btn btn-lg btn-primary me-2" href="{{ route('login') }}">Log In</a>
                 @if (Route::has('register'))
-                    <a class="btn btn-lg btn-success" href="{{ route('register') }}" role="button">Register</a>
+                    <a class="btn btn-lg btn-success" href="{{ route('register') }}">Register</a>
                 @endif
             @endauth
         </div>
     </div>
 
-    <div class="container mt-4">
+    <!-- About Section -->
+    <div class="container-lg mt-5">
         <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
+            <div class="col-md-10 col-lg-8">
+                <div class="card p-4">
                     <div class="card-body">
-                        <h2 class="card-title">About Us</h2>
-                        <p class="card-text">Easy Car Enterprise is dedicated to providing reliable car rental services
-                            with a wide selection of vehicles to suit your needs. With branches in Bandar Baru Bangi, Shah
-                            Alam, and Gombak, we're ready to serve you.</p>
+                        <h3 class="card-title mb-3"><i class="bi bi-info-circle-fill text-primary me-2"></i>About Us</h3>
+                        <p class="card-text">
+                            Easy Car Enterprise is committed to providing reliable car rental services with a wide selection of vehicles to suit your needs. We operate in multiple locations including Bandar Baru Bangi, Shah Alam, and Gombak — always ready to serve you with convenience, affordability, and professionalism.
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-Y8Si9Pb3eqbjWqyWvAiUZ6ztc9OuKmwXjz7tUOa7kt9vP9vmazegGGnYPhxYzKC" crossorigin="anonymous">
-    </script>
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            &copy; {{ date('Y') }} Easy Car Enterprise. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap Icons (Optional) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 </body>
 
 </html>

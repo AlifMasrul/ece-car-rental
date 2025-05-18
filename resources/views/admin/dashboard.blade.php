@@ -96,7 +96,7 @@
                         <tr>
                             <td>{{ $booking->id }}</td>
                             <td>{{ $booking->user->name ?? 'N/A' }}</td>
-                            <td>{{ $booking->car->model ?? 'N/A' }}</td>
+                            <td>{{ $booking->cars->first()->model ?? 'N/A' }}</td>
                             <td>{{ \Carbon\Carbon::parse($booking->start_date)->format('Y-m-d') }}</td>
                             <td>{{ \Carbon\Carbon::parse($booking->end_date)->format('Y-m-d') }}</td>
                             <td>{{ $booking->booking_status }}</td>

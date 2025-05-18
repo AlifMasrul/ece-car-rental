@@ -38,7 +38,7 @@ Route::middleware(['auth', IsAdmin::class])->prefix('admin')->group(function () 
         $totalUsers = \App\Models\User::count();
         $activeCars = \App\Models\Car::count(); // Assuming all cars are 'active'
         $pendingBookings = \App\Models\Booking::where('booking_status', 'pending')->count();
-        $recentBookings = \App\Models\Booking::orderBy('created_at', 'desc')->take(5)->get();
+        $recentBookings = \App\Models\Booking::orderBy('created_at', 'desc')->take(5)->with('cars:id,model')->get();
         $pendingCancellations = \App\Models\Booking::where('cancellation_status', 'pending')->count();
 
         return view('admin.dashboard', compact('totalUsers', 'activeCars', 'pendingBookings', 'recentBookings', 'pendingCancellations'));
